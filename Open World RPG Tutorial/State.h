@@ -10,14 +10,19 @@ public:
 
 	const bool& GetQuit() const;
 
+	void UpdateTimer(const float& dt);
 	virtual void UpdateMousePosition();
 	virtual void UpdateInput(const float& dt) = 0;
 	virtual void Update(const float& dt) = 0;
-	virtual void Render(sf::RenderTarget* target = nullptr) = 0;
+	virtual void Render(sf::RenderTarget* target) = 0;
 	virtual void EndState() = 0;
 
 	virtual void CheckForClose();
 	virtual void EndStateUpdate();
+	virtual void UpdatePause();
+
+	const bool GetPaused();
+	void SetPaused(const bool paused);
 
 protected:
 	sf::RenderWindow* Window = nullptr;
@@ -33,6 +38,10 @@ protected:
 	std::stack<State*>* States = nullptr;
 
 	virtual void InitKeyBindings() = 0;
+
 private:
 	bool WantsEnd = false;
+	bool Paused = false;
+	float PauseTimer = 0.0f;
+	float TimerAmount = 1.0f;
 };

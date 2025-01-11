@@ -1,12 +1,11 @@
 #include "MainMenuState.h"
 
-MainMenuState::MainMenuState(sf::RenderWindow* window,
-	std::map<std::string, int>* supportedKeys,
-	std::stack<State*>* states) : State(window, supportedKeys, states)
+MainMenuState::MainMenuState(sf::RenderWindow* window, sf::Font& font,
+	std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	 : State(window, supportedKeys, states), Font(font)
 {
 	InitVariables();
 	InitBackground();
-	InitFonts();
 	InitKeyBindings();
 	InitButtons();
 }
@@ -40,7 +39,7 @@ void MainMenuState::UpdateButtons()
 
 	if (Buttons["New_Game"]->IsPressed())
 	{
-		States->push(new GameState(Window, SupportedKeys, States));
+		States->push(new GameState(Window, Font, SupportedKeys, States));
 	}
 
 	if (Buttons["Editor"]->IsPressed())
@@ -56,7 +55,7 @@ void MainMenuState::Update(const float& dt)
 	UpdateButtons();
 }
 
-void MainMenuState::RenderButtons(sf::RenderTarget* target)
+void MainMenuState::RenderButtons(sf::RenderTarget& target)
 {
 	for (const auto& button : Buttons) button.second->Render(target);
 
@@ -66,9 +65,11 @@ void MainMenuState::RenderButtons(sf::RenderTarget* target)
 
 void MainMenuState::Render(sf::RenderTarget* target)
 {
+	if (!target) target = Window;
+
 	target->draw(Background);
 
-	RenderButtons(target);
+	RenderButtons(*target);
 }
 
 void MainMenuState::EndState()
@@ -141,14 +142,6 @@ void MainMenuState::InitButtons()
 		sf::Color(100, 40, 70, 200),
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 100));
-}
-
-void MainMenuState::InitFonts()
-{
-	if (!Font.openFromFile("Fonts/Dosis-Light.ttf"))
-	{
-		throw std::runtime_error("Could not load font!");
-	}
 }
 
 void MainMenuState::InitKeyBindings()

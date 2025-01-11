@@ -2,6 +2,7 @@
 
 Game::Game()
 {
+	InitFonts();
 	InitWindow();
 	InitKeys();
 	InitStates();
@@ -112,8 +113,8 @@ void Game::InitWindow()
 
 void Game::InitStates()
 {
-	//States.push(new GameState(Window, &SupportedKeys, &States));
-	States.push(new MainMenuState(Window, &SupportedKeys, &States));
+	States.push(new GameState(Window, Font, &SupportedKeys, &States));
+	//States.push(new MainMenuState(Window, Font, &SupportedKeys, &States));
 }
 
 void Game::InitKeys()
@@ -135,10 +136,19 @@ void Game::InitKeys()
 	else
 	{
 		SupportedKeys["Escape"] = (int)sf::Keyboard::Key::Escape;
+		SupportedKeys["PAUSE"] = (int)sf::Keyboard::Key::P;
 		SupportedKeys["W"] = (int)sf::Keyboard::Key::W;
 		SupportedKeys["A"] = (int)sf::Keyboard::Key::A;
 		SupportedKeys["S"] = (int)sf::Keyboard::Key::S;
 		SupportedKeys["D"] = (int)sf::Keyboard::Key::D;
+	}
+}
+
+void Game::InitFonts()
+{
+	if (!Font.openFromFile("Fonts/Dosis-Light.ttf"))
+	{
+		throw std::runtime_error("Could not load font!");
 	}
 }
 

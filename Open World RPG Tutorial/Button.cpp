@@ -4,11 +4,12 @@ Button::Button(float x, float y, float width, float height,
 	sf::Font* font, std::string text, unsigned int characterSize,
 	sf::Color textIdleColor, sf::Color textHoverColor, sf::Color textActiveColor,
 	sf::Color idleColor, sf::Color hoverColor, sf::Color activeColor)
+	: Text(*font)
 {
 	Shape.setPosition({ x, y });
 	Shape.setSize({ width, height });
 	Font = font;
-	Text.setFont(*Font);
+	//Text.setFont(*Font);
 	Text.setString(text);
 	Text.setFillColor(textIdleColor);
 	Text.setCharacterSize(20);
@@ -59,12 +60,10 @@ void Button::Update(const sf::Vector2f& mousePos)
 	}
 }
 
-void Button::Render(sf::RenderTarget* target)
+void Button::Render(sf::RenderTarget& target)
 {
-	if (!target) return;
-
-	target->draw(Shape);
-	target->draw(Text);
+	target.draw(Shape);
+	target.draw(Text);
 }
 
 const bool Button::IsPressed() const

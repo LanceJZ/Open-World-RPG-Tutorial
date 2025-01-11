@@ -10,18 +10,36 @@ AnimationComponent::~AnimationComponent()
 	for (const auto& sheet : Animations) delete sheet.second;
 }
 
-void AnimationComponent::Play(const std::string& name, const float& dt)
+void AnimationComponent::Play(const std::string& name, const float& dt,
+	const float& modifier, const float& modifierMax, const bool priority)
 {
-	if (LastAnimation)
+	if (priority)
 	{
-		if (Animations[name] != LastAnimation)
+		PriorityAnimation = Animations[name];
+
+		if (LastAnimation)
 		{
-			LastAnimation->Reset();
-			LastAnimation = Animations[name];
+			if (Animations[name] != LastAnimation)
+			{
+				LastAnimation->Reset();
+				LastAnimation = Animations[name];
+			}
+		}
+
+	}
+	else
+	{
+		if (LastAnimation)
+		{
+			if (Animations[name] != LastAnimation)
+			{
+				LastAnimation->Reset();
+				LastAnimation = Animations[name];
+			}
 		}
 	}
 
-	Animations[name]->Play(dt);
+	Animations[name]->Play(dt, modifier, modifierMax);
 }
 
 void AnimationComponent::Add(const std::string& name, sf::Sprite& Sprite,
@@ -37,4 +55,9 @@ void AnimationComponent::Start(std::string name)
 
 void AnimationComponent::Reset(std::string name)
 {
+}
+
+const bool& AnimationComponent::IsDone(std::string name)
+{
+	return Animations[name]->IsDone();
 }

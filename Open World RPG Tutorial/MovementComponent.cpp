@@ -1,6 +1,6 @@
 #include "MovementComponent.h"
 
-MovementComponent::MovementComponent(sf::Sprite& sprite, float maxVelocity,
+MovementComponent::MovementComponent(sf::Sprite& sprite, sf::Vector2f maxVelocity,
 	float acceleration, float deceleration) : Sprite(sprite),
 	MaxVelocity(maxVelocity), Acceleration(acceleration), Deceleration(deceleration)
 {
@@ -13,6 +13,15 @@ MovementComponent::~MovementComponent()
 const bool MovementComponent::IsIdle() const
 {
 	return (Idle);
+}
+
+const bool MovementComponent::IsMoving() const
+{
+	if (Velocity.x > 0.0f || Velocity.x < 0.0f ||
+		Velocity.y > 0.0f || Velocity.y < 0.0f)
+		return true;
+
+	return false;
 }
 
 const bool MovementComponent::IsMovingLeft() const
@@ -80,24 +89,29 @@ void MovementComponent::Move(const sf::Vector2f direction, const float dt)
 
 	if (Velocity.x > 0.0f)
 	{
-		if (Velocity.x > MaxVelocity) Velocity.x = MaxVelocity;
+		if (Velocity.x > MaxVelocity.x) Velocity.x = MaxVelocity.x;
 	}
 	else
 	{
-		if (Velocity.x < -MaxVelocity) Velocity.x = -MaxVelocity;
+		if (Velocity.x < -MaxVelocity.x) Velocity.x = -MaxVelocity.x;
 	}
 
 	if (Velocity.y > 0.0f)
 	{
-		if (Velocity.y > MaxVelocity) Velocity.y = MaxVelocity;
+		if (Velocity.y > MaxVelocity.y) Velocity.y = MaxVelocity.y;
 	}
 	else
 	{
-		if (Velocity.y < -MaxVelocity)	Velocity.y = -MaxVelocity;
+		if (Velocity.y < -MaxVelocity.y)	Velocity.y = -MaxVelocity.y;
 	}
 }
 
 const sf::Vector2f& MovementComponent::GetVelocity() const
 {
 	return Velocity;
+}
+
+const sf::Vector2f& MovementComponent::GetMaxVelocity() const
+{
+	return MaxVelocity;
 }

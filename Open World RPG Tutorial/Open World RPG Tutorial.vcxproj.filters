@@ -43,6 +43,12 @@
     <Filter Include="Components\Header Files">
       <UniqueIdentifier>{4c8671f3-1870-4f7b-8827-c09da91fa62c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Tile">
+      <UniqueIdentifier>{7120b2c1-5f0c-4360-bc61-84e01cd7b8b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{62778116-7b1b-4097-8d46-29f71f84d74c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Open World RPG Tutorial.cpp">
@@ -76,7 +82,16 @@
       <Filter>Components\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="EditorState.cpp">
-      <Filter>States</Filter>
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HitboxComponent.cpp">
+      <Filter>Components\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseMenu.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -114,7 +129,16 @@
       <Filter>Components\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EditorState.h">
-      <Filter>States</Filter>
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HitboxComponent.h">
+      <Filter>Components\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
+      <Filter>GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,8 @@
 #include "GameState.h"
 
-GameState::GameState(sf::RenderWindow* window,
-	std::map<std::string, int>* supportedKeys,
-	std::stack<State*>* states) : State(window, supportedKeys, states)
+GameState::GameState(sf::RenderWindow* window, sf::Font& font,
+	std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	 : State(window, supportedKeys, states), ThePauseMenu(*window, font)
 {
 	InitKeyBindings();
 	InitTextures();
@@ -14,9 +14,16 @@ GameState::~GameState()
 	delete Player;
 }
 
+void GameState::UpdatePauseInput()
+{
+	UpdatePause();
+	CheckForClose();
+	Player->SetPaused(GetPaused());
+}
+
 void GameState::UpdateInput(const float& dt)
 {
-	CheckForClose();
+	UpdatePauseInput();
 	Player->SetIdle();
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(KeyBindings.at("MOVE_LEFT"))))
@@ -35,8 +42,16 @@ void GameState::UpdateInput(const float& dt)
 void GameState::Update(const float& dt)
 {
 	UpdateMousePosition();
-	UpdateInput(dt);
+	UpdatePauseInput();
+	UpdateTimer(dt);
 
+	if (GetPaused())
+	{
+		ThePauseMenu.Update();
+		return;
+	}
+
+	UpdateInput(dt);
 	Player->Update(dt);
 }
 
@@ -44,7 +59,9 @@ void GameState::Render(sf::RenderTarget* target)
 {
 	if (!target) target = Window;
 
-	Player->Render(target);
+	Player->Render(*target);
+
+	if (GetPaused()) ThePauseMenu.Render(*target);
 }
 
 void GameState::EndState()
@@ -74,6 +91,7 @@ void GameState::InitKeyBindings()
 	else
 	{
 		KeyBindings["CLOSE"] = SupportedKeys->at("Escape");
+		KeyBindings["PAUSE"] = SupportedKeys->at("P");
 		KeyBindings["MOVE_LEFT"] = SupportedKeys->at("A");
 		KeyBindings["MOVE_RIGHT"] = SupportedKeys->at("D");
 		KeyBindings["MOVE_UP"] = SupportedKeys->at("W");

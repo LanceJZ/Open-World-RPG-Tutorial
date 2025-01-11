@@ -150,6 +150,10 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameState.cpp" />
+    <ClCompile Include="HitboxComponent.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="MainMenuState.cpp">
       <SubType>
       </SubType>
@@ -159,8 +163,16 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Open World RPG Tutorial.cpp" />
+    <ClCompile Include="PauseMenu.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="State.cpp" />
     <ClCompile Include="ThePlayer.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -182,7 +194,15 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="HitboxComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="MovementComponent.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="PauseMenu.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -193,6 +213,10 @@
     </ClInclude>
     <ClInclude Include="State.h" />
     <ClInclude Include="ThePlayer.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
       <SubType>
       </SubType>
     </ClInclude>

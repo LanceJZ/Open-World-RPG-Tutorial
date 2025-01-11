@@ -19,7 +19,7 @@ public:
 	virtual ~Button();
 
 	void Update(const sf::Vector2f& mousePos);
-	void Render(sf::RenderTarget* target = nullptr);
+	void Render(sf::RenderTarget& target);
 
 	const bool IsPressed() const;
 
@@ -28,7 +28,7 @@ private:
 
 	sf::RectangleShape Shape = sf::RectangleShape();
 	sf::Font* Font = nullptr;
-	sf::Text Text = sf::Text(*Font);
+	sf::Text Text;
 	sf::Color TextIdleColor = sf::Color::White;
 	sf::Color TextHoverColor = sf::Color::Blue;
 	sf::Color TextActiveColor = sf::Color::Red;

@@ -41,7 +41,7 @@ void EditorState::Update(const float& dt)
 	UpdateButtons();
 }
 
-void EditorState::RenderButtons(sf::RenderTarget* target)
+void EditorState::RenderButtons(sf::RenderTarget& target)
 {
 	for (const auto& button : Buttons) button.second->Render(target);
 
@@ -49,7 +49,9 @@ void EditorState::RenderButtons(sf::RenderTarget* target)
 
 void EditorState::Render(sf::RenderTarget* target)
 {
-	RenderButtons(target);
+	if (!target) target = Window;
+
+	RenderButtons(*target);
 }
 
 void EditorState::EndState()

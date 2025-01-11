@@ -19,9 +19,10 @@ public:
 	void Run();
 
 private:
-	sf::Clock DTClock = {};
 	float DTime = {};
 
+	sf::Clock DTClock = {};
+	sf::Font Font = {};
 	sf::RenderWindow* Window = {};
 
 	std::stack<State*> States = {};
@@ -32,5 +33,6 @@ private:
 	void InitWindow();
 	void InitStates();
 	void InitKeys();
+	void InitFonts();
 	void EndGame();
 };

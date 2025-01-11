@@ -11,6 +11,7 @@ Entity::~Entity()
 	delete Sprite;
 	delete Movement;
 	delete Animation;
+	delete Hitbox;
 }
 
 void Entity::SetUpSprite(sf::Texture& texture)
@@ -22,12 +23,13 @@ void Entity::SetUpSprite(sf::Texture& texture)
 void Entity::Update(const float& dt)
 {
 	if (Movement) Movement->Update(dt);
+	if (Hitbox) Hitbox->Update(dt);
 }
 
-void Entity::Render(sf::RenderTarget* target)
+void Entity::Render(sf::RenderTarget& target)
 {
-	if (Sprite) target->draw(*Sprite);
-
+	if (Sprite) target.draw(*Sprite);
+	if (Hitbox) Hitbox->Render(target);
 }
 
 void Entity::Move(const sf::Vector2f& dir, const float& dt)
@@ -45,7 +47,12 @@ void Entity::SetIdle()
 	if (Movement) Movement->SetIdle();
 }
 
-void Entity::CreateMovementComponent(const float maxVelocity,
+void Entity::SetPaused(const bool& paused)
+{
+	Paused = paused;
+}
+
+void Entity::CreateMovementComponent(const sf::Vector2f maxVelocity,
 	const float acceleration, const float deceleration)
 {
 	if (Sprite) Movement = new MovementComponent(*Sprite, maxVelocity,
@@ -55,6 +62,12 @@ void Entity::CreateMovementComponent(const float maxVelocity,
 void Entity::CreateAnimationComponent(sf::Texture& textureSheet)
 {
 	Animation = new AnimationComponent(textureSheet);
+}
+
+void Entity::CreateHitboxComponent(sf::Sprite& sprite, const sf::Vector2f& offset,
+	const sf::Vector2f& size)
+{
+	Hitbox = new HitboxComponent(sprite, offset, size);
 }
 
 void Entity::InitVariables()
