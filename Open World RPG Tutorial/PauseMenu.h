@@ -10,8 +10,14 @@ public:
 	PauseMenu(sf::RenderWindow& window, sf::Font& font);
 	virtual ~PauseMenu();
 
-	void Update();
+	std::map<std::string, Button*>& GetButtons();
+
+	void Update(const sf::Vector2f& mousePosView);
 	void Render(sf::RenderTarget& target);
+
+	void AddButton(const std::string name, sf::Vector2f position,
+		const std::string text);
+	const bool IsButtonPressed(const std::string key);
 
 private:
 	sf::RectangleShape Background;
@@ -20,5 +26,6 @@ private:
 	sf::Text MenuText;
 
 	std::map<std::string, Button*> Buttons;
+
 };
 

@@ -2,16 +2,28 @@
 
 GameState::GameState(sf::RenderWindow* window, sf::Font& font,
 	std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	 : State(window, supportedKeys, states), ThePauseMenu(*window, font)
+	 : State(window, font, supportedKeys, states), ThePauseMenu(*window, font)
 {
 	InitKeyBindings();
 	InitTextures();
 	InitPlayer();
+	InitPauseMenu();
+
+	Map = new TileMap();
 }
 
 GameState::~GameState()
 {
 	delete Player;
+	delete Map;
+}
+
+void GameState::UpdatePauseMenuButtons()
+{
+	if (ThePauseMenu.IsButtonPressed("Quit"))
+	{
+		EndState();
+	}
 }
 
 void GameState::UpdatePauseInput()
@@ -47,18 +59,21 @@ void GameState::Update(const float& dt)
 
 	if (GetPaused())
 	{
-		ThePauseMenu.Update();
+		ThePauseMenu.Update(MousePosView);
+		UpdatePauseMenuButtons();
 		return;
 	}
 
 	UpdateInput(dt);
 	Player->Update(dt);
+	Map->Update(dt);
 }
 
 void GameState::Render(sf::RenderTarget* target)
 {
 	if (!target) target = Window;
 
+	Map->Render(*target);
 	Player->Render(*target);
 
 	if (GetPaused()) ThePauseMenu.Render(*target);
@@ -66,6 +81,7 @@ void GameState::Render(sf::RenderTarget* target)
 
 void GameState::EndState()
 {
+	State::EndState();
 }
 
 void GameState::EndStateUpdate()
@@ -116,4 +132,15 @@ void GameState::InitPlayer()
 {
 	Player = new ThePlayer(sf::Vector2f(900.0f, 500.0f),
 		Textures.at("PLAYER_SHEET"));
+}
+
+void GameState::InitPauseMenu()
+{
+	float center = Window->getSize().x / 2.0f;
+	float hieght = 400.0f;
+	float spacing = 70.0f;
+
+	sf::Vector2f position = sf::Vector2f(center, 750.0f);
+
+	ThePauseMenu.AddButton("Quit", position, "Quit");
 }

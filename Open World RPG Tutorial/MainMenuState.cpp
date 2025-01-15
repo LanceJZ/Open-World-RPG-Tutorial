@@ -2,7 +2,7 @@
 
 MainMenuState::MainMenuState(sf::RenderWindow* window, sf::Font& font,
 	std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-	 : State(window, supportedKeys, states), Font(font)
+	 : State(window, font, supportedKeys, states)
 {
 	InitVariables();
 	InitBackground();
@@ -35,7 +35,7 @@ void MainMenuState::UpdateButtons()
 {
 	for (const auto& button : Buttons) button.second->Update(MousePosView);
 
-	if (Buttons["Exit_Game"]->IsPressed()) EndStateUpdate();
+	if (Buttons["Exit_Game"]->IsPressed()) EndState();
 
 	if (Buttons["New_Game"]->IsPressed())
 	{
@@ -44,7 +44,12 @@ void MainMenuState::UpdateButtons()
 
 	if (Buttons["Editor"]->IsPressed())
 	{
-		States->push(new EditorState(Window, SupportedKeys, States));
+		States->push(new EditorState(Window, Font, SupportedKeys, States));
+	}
+
+	if (Buttons["Settings"]->IsPressed())
+	{
+		States->push(new SettingsState(Window, Font, SupportedKeys, States));
 	}
 }
 
@@ -74,6 +79,7 @@ void MainMenuState::Render(sf::RenderTarget* target)
 
 void MainMenuState::EndState()
 {
+	State::EndState();
 }
 
 void MainMenuState::InitVariables()
@@ -94,11 +100,11 @@ void MainMenuState::InitBackground()
 
 void MainMenuState::InitButtons()
 {
-	float x = 1000.0f;
-	float y = 300.0f;
 	float spacing = 70.0f;
+	sf::Vector2f position = sf::Vector2f(1000.0f, 300.0f);
+	sf::Vector2f size = sf::Vector2f(150.0f, 50.0f);
 
-	Buttons["New_Game"] = new Button(x, y, 150, 50, &Font,
+	Buttons["New_Game"] = new Button(position, size, &Font,
 		"New Game", 20,
 		sf::Color(170, 170, 170, 200),
 		sf::Color(255, 255, 255, 255),
@@ -107,7 +113,8 @@ void MainMenuState::InitButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 100));
 
-	Buttons["Load_Game"] = new Button(x, y + spacing, 150, 50, &Font,
+	position.y += spacing;
+	Buttons["Load_Game"] = new Button(position, size, &Font,
 		"Load Game", 20,
 		sf::Color(170, 170, 170, 200),
 		sf::Color(255, 255, 255, 255),
@@ -116,7 +123,8 @@ void MainMenuState::InitButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 100));
 
-	Buttons["Editor"] = new Button(x, y + spacing * 2, 150, 50, &Font,
+	position.y += spacing;
+	Buttons["Editor"] = new Button(position, size, &Font,
 		"Editor", 20,
 		sf::Color(170, 170, 170, 200),
 		sf::Color(255, 255, 255, 255),
@@ -125,7 +133,8 @@ void MainMenuState::InitButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 100));
 
-	Buttons["Settings"] = new Button(x, y + spacing * 3, 150, 50, &Font,
+	position.y += spacing;
+	Buttons["Settings"] = new Button(position, size, &Font,
 		"Settings", 20,
 		sf::Color(140, 140, 140, 200),
 		sf::Color(255, 255, 255, 255),
@@ -134,7 +143,8 @@ void MainMenuState::InitButtons()
 		sf::Color(150, 150, 150, 255),
 		sf::Color(20, 20, 20, 100));
 
-	Buttons["Exit_Game"] = new Button(x, y + spacing * 5, 150, 50, &Font,
+	position.y += spacing;
+	Buttons["Exit_Game"] = new Button(position, size, &Font,
 		"Exit Game", 20,
 		sf::Color(140, 140, 140, 200),
 		sf::Color(255, 255, 255, 255),
@@ -168,16 +178,4 @@ void MainMenuState::InitKeyBindings()
 		KeyBindings["MOVE_UP"] = SupportedKeys->at("W");
 		KeyBindings["MOVE_DOWN"] = SupportedKeys->at("S");
 	}
-}
-
-void MainMenuState::ViewMouseLocation()
-{
-	sf::Text mouseText = sf::Text(Font);
-	mouseText.setPosition(MousePosView + sf::Vector2f(20, 10));
-	mouseText.setCharacterSize(12);
-	mouseText.setFillColor(sf::Color::White);
-	mouseText.setString("X: " + std::to_string((int)MousePosView.x) +
-		" Y: " + std::to_string((int)MousePosView.y));
-
-	Window->draw(mouseText);
 }

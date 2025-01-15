@@ -1,11 +1,9 @@
 #include "State.h"
 
-State::State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys,
-	std::stack<State*>* states)
+State::State(sf::RenderWindow* window, sf::Font& font,
+	std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	: Font(font), Window(window), SupportedKeys(supportedKeys), States(states)
 {
-	Window = window;
-	SupportedKeys = supportedKeys;
-	States = states;
 }
 
 State::~State()
@@ -30,15 +28,15 @@ void State::UpdateMousePosition()
 	MousePosView = Window->mapPixelToCoords(sf::Mouse::getPosition(*Window));
 }
 
+void State::EndState()
+{
+	WantsEnd = true;
+}
+
 void State::CheckForClose()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(KeyBindings.at("CLOSE"))))
 		WantsEnd = true;
-}
-
-void State::EndStateUpdate()
-{
-	WantsEnd = true;
 }
 
 void State::UpdatePause()
@@ -60,4 +58,16 @@ const bool State::GetPaused()
 
 void State::SetPaused(const bool paused)
 {
+}
+
+void State::ViewMouseLocation()
+{
+	sf::Text mouseText = sf::Text(Font);
+	mouseText.setPosition(MousePosView + sf::Vector2f(20, 10));
+	mouseText.setCharacterSize(12);
+	mouseText.setFillColor(sf::Color::White);
+	mouseText.setString("X: " + std::to_string((int)MousePosView.x) +
+		" Y: " + std::to_string((int)MousePosView.y));
+
+	Window->draw(mouseText);
 }

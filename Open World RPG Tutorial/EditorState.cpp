@@ -1,8 +1,7 @@
 #include "EditorState.h"
 
-EditorState::EditorState(sf::RenderWindow* window, std::map<std::string,
-	int>* supportedKeys, std::stack<State*>* states)
-	: State(window, supportedKeys, states)
+EditorState::EditorState(sf::RenderWindow* window, sf::Font& font, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
+	: State(window, font, supportedKeys, states)
 {
 	InitKeyBindings();
 	InitVariables();

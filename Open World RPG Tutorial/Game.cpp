@@ -25,6 +25,8 @@ void Game::UpdateDT()
 
 	if (DTime > 0.1f)
 		DTime = 0.1f;
+
+	KeyTimer += DTime;
 }
 
 void Game::UpdateSFMLEvents()
@@ -38,11 +40,16 @@ void Game::UpdateSFMLEvents()
 
 void Game::Update()
 {
-	if (States.top()->GetQuit())
+	if (KeyTimer > KeyTimeMax)
 	{
-		States.top()->EndState();
-		delete States.top();
-		States.pop();
+		KeyTimer = 0.0f;
+
+		if (States.top()->GetQuit())
+		{
+			States.top()->EndState();
+			delete States.top();
+			States.pop();
+		}
 	}
 
 	if (!States.empty()) States.top()->Update(DTime);
@@ -115,6 +122,7 @@ void Game::InitStates()
 {
 	States.push(new GameState(Window, Font, &SupportedKeys, &States));
 	//States.push(new MainMenuState(Window, Font, &SupportedKeys, &States));
+	//States.push(new SettingsState(Window, Font, &SupportedKeys, &States));
 }
 
 void Game::InitKeys()

@@ -20,6 +20,8 @@ public:
 
 private:
 	float DTime = {};
+	float KeyTimer = {};
+	float KeyTimeMax = 0.5f;
 
 	sf::Clock DTClock = {};
 	sf::Font Font = {};

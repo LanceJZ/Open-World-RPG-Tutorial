@@ -1,6 +1,7 @@
 #pragma once
 #include "GameState.h"
 #include "EditorState.h"
+#include "SettingsState.h"
 #include "Button.h"
 
 class MainMenuState : public State
@@ -21,7 +22,6 @@ public:
 private:
 	sf::RectangleShape Background;
 	sf::Texture BackgroundTexture = {};
-	sf::Font& Font;
 
 
 	std::map<std::string, Button*> Buttons;
@@ -30,5 +30,4 @@ private:
 	void InitBackground();
 	void InitButtons();
 	void InitKeyBindings();
-	void ViewMouseLocation();
 };

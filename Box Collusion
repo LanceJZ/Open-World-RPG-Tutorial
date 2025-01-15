@@ -1,0 +1,7 @@
+bool checkCollide(int x, int y, int oWidth, int oHeight, int xTwo, int yTwo, int oTwoWidth, int oTwoHeight)
+{
+    if( x + oWidth < xTwo || x > xTwo + oTwoWidth ) return false;
+    if( y + oHeight < yTwo || y > yTwo + oTwoHeight ) return false;
+
+    return true;
+}

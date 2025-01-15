@@ -49,6 +49,15 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{62778116-7b1b-4097-8d46-29f71f84d74c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\Header Files">
+      <UniqueIdentifier>{3e05f629-693a-4a8d-ae3f-c3f16907d009}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI\Source Files">
+      <UniqueIdentifier>{350383f5-9401-4439-9ac6-aab63ed1e457}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{5bad5255-5be4-441b-b3c4-8b7308c44611}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Open World RPG Tutorial.cpp">
@@ -72,9 +81,6 @@
     <ClCompile Include="MainMenuState.cpp">
       <Filter>States\Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MovementComponent.cpp">
       <Filter>Components\Source Files</Filter>
     </ClCompile>
@@ -90,8 +96,20 @@
     <ClCompile Include="Tile.cpp">
       <Filter>Tile</Filter>
     </ClCompile>
+    <ClCompile Include="SettingsState.cpp">
+      <Filter>States\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>GUI\Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="PauseMenu.cpp">
+      <Filter>GUI\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DropDownList.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="TileMap.cpp">
+      <Filter>Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -112,9 +130,6 @@
     </ClInclude>
     <ClInclude Include="MainMenuState.h">
       <Filter>States\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SFMLHeaders.h">
       <Filter>Header Files</Filter>
@@ -137,8 +152,20 @@
     <ClInclude Include="Tile.h">
       <Filter>Tile</Filter>
     </ClInclude>
+    <ClInclude Include="SettingsState.h">
+      <Filter>States\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="PauseMenu.h">
+      <Filter>GUI\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DropDownList.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="TileMap.h">
+      <Filter>Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -152,6 +179,9 @@
       <Filter>Config Files</Filter>
     </None>
     <None Include="..\Config\editorstate_keybinds.ini">
+      <Filter>Config Files</Filter>
+    </None>
+    <None Include="..\Config\settingsstate_keybinds.ini">
       <Filter>Config Files</Filter>
     </None>
   </ItemGroup>

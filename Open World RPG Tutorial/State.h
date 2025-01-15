@@ -4,8 +4,8 @@
 class State
 {
 public:
-	State(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys,
-		std::stack<State*>* states);
+	State(sf::RenderWindow* window, sf::Font& font,
+		std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
 	virtual ~State();
 
 	const bool& GetQuit() const;
@@ -15,10 +15,9 @@ public:
 	virtual void UpdateInput(const float& dt) = 0;
 	virtual void Update(const float& dt) = 0;
 	virtual void Render(sf::RenderTarget* target) = 0;
-	virtual void EndState() = 0;
+	virtual void EndState();
 
 	virtual void CheckForClose();
-	virtual void EndStateUpdate();
 	virtual void UpdatePause();
 
 	const bool GetPaused();
@@ -30,6 +29,7 @@ protected:
 	sf::Vector2i MousePosScreen = {};
 	sf::Vector2i MousePosWindow = {};
 	sf::Vector2f MousePosView = {};
+	sf::Font& Font;
 
 	std::map<std::string, int>* SupportedKeys = {};
 	std::map<std::string, int> KeyBindings;
@@ -43,5 +43,7 @@ private:
 	bool WantsEnd = false;
 	bool Paused = false;
 	float PauseTimer = 0.0f;
-	float TimerAmount = 1.0f;
+	float TimerAmount = 0.50f;
+
+	void ViewMouseLocation();
 };

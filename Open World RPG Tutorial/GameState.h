@@ -1,5 +1,6 @@
 #pragma once
 #include "State.h"
+#include "TileMap.h"
 #include "ThePlayer.h"
 #include "PauseMenu.h"
 
@@ -11,6 +12,7 @@ public:
 		std::stack<State*>* states);
 	virtual ~GameState();
 
+	void UpdatePauseMenuButtons();
 	void UpdatePauseInput();
 	void UpdateInput(const float& dt);
 	void Update(const float& dt);
@@ -22,8 +24,10 @@ public:
 private:
 	ThePlayer* Player;
 	PauseMenu ThePauseMenu;
+	TileMap* Map;
 
 	void InitKeyBindings();
 	void InitTextures();
 	void InitPlayer();
+	void InitPauseMenu();
 };
